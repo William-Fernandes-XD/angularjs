@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html ng-app="loja" lang="pt-br">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+
+<script src="resources/script/bootstrap-checkbox-radio.js"></script>
+<script src="resources/script/bootstrap-notify.js"></script>
+<script src="resources/script/bootstrap.min.js"></script>
+<script src="resources/script/chartist.min.js"></script>
+<script src="resources/script/demo.js"></script>
+<script src="resources/script/jquery-1.10.2.js"></script>
+<script src="resources/script/jquery-ui.js"></script>
+<script src="resources/script/jquery.mask.js"></script>
+<script src="resources/script/jquery.mask.min.js"></script>
+<script src="resources/script/jquery.maskMoney.js"></script>
+<script src="resources/script/paper-dashboard.js"></script>
+<script src="resources/script/angular-locale_pt-br.js"></script>
+<script src="resources/script/app.js"></script>
+
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/animate.min.css">
+<link rel="stylesheet" href="resources/css/demo.css">
+<link rel="stylesheet" href="resources/css/paper-dashboard.css">
+<link rel="stylesheet" href="resources/css/themify-icons.css">
+
+<!-- Configuração da página -->
+
+<title>Livraria BR</title>
+<meta name="viewport" content="width=device-width">
+</head>
+<body ng-controller="controllerPessoa">
+	<div class="wrapper">
+		<div class="sidebar" data-background-color="white"
+			data-active-color="danger">
+
+			<div class="sidebar-wrapper">
+				<div class="logo">
+					<a href="" class="simple-text">
+						Livraria BR</a>
+				</div>
+				<ul class="nav">
+					<li><a class="simple-text" href="#clientelist">
+						<p>Clientes</p>
+					</a></li>
+					<li><a href="user.html"> 
+							<p>User Profile</p>
+					</a></li>
+					<li><a href="table.html">
+							<p>Table List</p>
+					</a></li>
+					<li><a href="typography.html"> 
+							<p>Typography</p>
+					</a></li>
+					<li><a href="icons.html"> 
+							<p>Icons</p>
+					</a></li>
+					<li><a href="maps.html"> 
+							<p>Maps</p>
+					</a></li>
+					<li><a href="notifications.html"> 
+							<p>Notifications</p>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">Home</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown"><a href="#/cliente/cadastro" class="dropdown-toggle"
+								data-toggle="dropdown"> 
+									<p>Cadastro</p> <b class="caret"></b>
+							</a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Notification 1</a></li>
+									<li><a href="#">Notification 2</a></li>
+									<li><a href="#">Notification 3</a></li>
+									<li><a href="#">Notification 4</a></li>
+									<li><a href="#">Another notification</a></li>
+								</ul></li>
+							<li><a href="#"> 
+									<p>Sair</p>
+							</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="content">
+				<div class="container-fluid" ng-view>
+					<!-- Corpo -->
+				</div>
+			</div>
+			<footer class="footer">
+			</footer>
+		</div>
+	</div>
+	<div class="fixed-plugin">
+		<div class="dropdown show-dropdown">
+			<a href="#" data-toggle="dropdown"> <i class="fa fa-cog fa-2x">
+			</i>
+			</a>
+			<ul class="dropdown-menu">
+				<li class="header-title">Sidebar Background</li>
+				<li class="adjustments-line text-center"><a
+					href="javascript:void(0)" class="switch-trigger background-color">
+						<span class="badge filter badge-white active" data-color="white"></span>
+						<span class="badge filter badge-black" data-color="black"></span>
+				</a></li>
+				<li class="header-title">Sidebar Active Color</li>
+				<li class="adjustments-line text-center"><a
+					href="javascript:void(0)" class="switch-trigger active-color">
+						<span class="badge filter badge-primary" data-color="primary"></span>
+						<span class="badge filter badge-info" data-color="info"></span> <span
+						class="badge filter badge-success" data-color="success"></span> <span
+						class="badge filter badge-warning" data-color="warning"></span> <span
+						class="badge filter badge-danger active" data-color="danger"></span>
+				</a></li>
+				<li class="button-container">
+					<div class="">
+						<a href="http://www.creative-tim.com/product/paper-dashboard"
+							target="_blank" class="btn btn-info btn-block btn-fill">Download
+							for Free</a>
+					</div>
+				</li>
+				<li class="header-title">Want More Components?</li>
+				<li class="button-container">
+					<div class="">
+						<a
+							href="http://www.creative-tim.com/product/paper-dashboard-pro?ref=pd-free-upgrade-live"
+							target="_blank" class="btn btn-danger btn-block btn-fill">Get
+							PRO Version!</a>
+					</div>
+				</li>
+				<li class="header-title">Thank you for sharing!</li>
+				<li class="button-container">
+					<button id="twitter" class="btn btn-social btn-twitter btn-round">
+						<i class="fa fa-twitter"></i>
+					</button>
+					<button id="facebook" class="btn btn-social btn-facebook btn-round">
+						<i class="fa fa-facebook-square"></i>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script defer
+		src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993"
+		integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA=="
+		data-cf-beacon='{"rayId":"76706c871ac101a7","version":"2022.11.0","r":1,"token":"1b7cbb72744b40c580f8633c6b62637e","si":100}'
+		crossorigin="anonymous"></script>
+</body>
+<script>
+    // Facebook Pixel Code Don't Delete
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+    try{
+        fbq('init', '111649226022273');
+        fbq('track', "PageView");
+
+    }catch(err) {
+        console.log('Facebook Track Error:', err);
+    }
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=111649226022273&ev=PageView&noscript=1"
+    />
+</noscript>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        demo.initChartist();
+
+        $.notify({
+            icon: 'ti-gift',
+            message: "Welcome to <b>Paper Dashboard</b> - a beautiful Bootstrap Admin Panel for your next project."
+
+        },{
+            type: 'success',
+            timer: 4000
+        });
+
+    });
+</script>
+</html>
