@@ -15,7 +15,7 @@ public class HibernateUtil implements Serializable{
 		
 		try {
 			if(factory == null) {
-				factory = new Configuration().configure().buildSessionFactory();
+				factory = (new Configuration()).configure().buildSessionFactory();
 			}
 		}catch(Exception e) {
 			System.err.println("Ocorreu um erro ao tentar criar sessionFactory");

@@ -20,71 +20,75 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import br.com.angularjs.context.ContextLoaderListenerAngularjs;
 import br.com.angularjs.hibernate.HibernateUtil;
 
+/**
+ * Intercepta todas as requisições, faz commit e rollback 
+ * @author alex
+ */
 @WebFilter(filterName = "conexaoFilter")
-public class FilterOpenSessionInView extends DelegatingFilterProxy implements Serializable{
+public class FilterOpenSessionInView extends DelegatingFilterProxy implements
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static SessionFactory factory;
-	
+	private static SessionFactory sf;
+
 	@Override
-	protected void initFilterBean() throws ServletException {
-		factory = HibernateUtil.getFactory();
+	public void initFilterBean() throws ServletException {
+		sf = HibernateUtil.getFactory();
 	}
-	
+
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		
-		// Pega o banco de dados do spring, cria um padrão, depois cria uma plataforma de transações com o padrão criado
-		
-		BasicDataSource springDataSource = (BasicDataSource) ContextLoaderListenerAngularjs.getBean("springDataSource");
+	public void doFilter(ServletRequest servletRequest,
+			ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
+
+		BasicDataSource springDataSource = (BasicDataSource) ContextLoaderListenerAngularjs
+				.getBean("springDataSource");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		PlatformTransactionManager transactionManager = new DataSourceTransactionManager(springDataSource);
+		PlatformTransactionManager transactionManager = new DataSourceTransactionManager(
+				springDataSource);
 		TransactionStatus status = transactionManager.getTransaction(def);
-		
+
 		try {
-			
-			request.setCharacterEncoding("UTF-8");
-			factory.getCurrentSession().getTransaction().commit();
-			
-			if(factory.getCurrentSession().getTransaction().isActive()) {
-				
-				factory.getCurrentSession().flush();
-				factory.getCurrentSession().getTransaction().commit();
+
+			servletRequest.setCharacterEncoding("UTF-8");
+
+			sf.getCurrentSession().beginTransaction();
+			chain.doFilter(servletRequest, servletResponse);
+
+			transactionManager.commit(status);
+
+			if (sf.getCurrentSession().getTransaction().isActive()) {
+				sf.getCurrentSession().flush();
+				sf.getCurrentSession().getTransaction().commit();
 			}
-			
-			if(factory.getCurrentSession().isOpen()) {
-				factory.getCurrentSession().close();
+
+			if (sf.getCurrentSession().isOpen()) {
+				sf.getCurrentSession().close();
 			}
-			
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			
-		}catch (Exception e) {
-			
+
+			servletResponse.setCharacterEncoding("UTF-8");
+			servletResponse.setContentType("text/html; charset=UTF-8");
+
+		} catch (Exception e) {
+
 			transactionManager.rollback(status);
-			
-			if(factory.getCurrentSession().getTransaction().isActive()) {
-				
-				factory.getCurrentSession().flush();
-				factory.getCurrentSession().getTransaction().commit();
-			}
-			
-			if(factory.getCurrentSession().isOpen()) {
-				factory.getCurrentSession().close();
-			}
-			
-			System.err.println("Erro ao tentar filtrar transações");
+
 			e.printStackTrace();
-		}finally {
-			
-			if(factory.getCurrentSession().getTransaction().isActive()) {
-				if(factory.getCurrentSession().beginTransaction().isActive()) {
-					factory.getCurrentSession().flush();
-					factory.getCurrentSession().clear();
+
+			if (sf.getCurrentSession().getTransaction().isActive()) {
+				sf.getCurrentSession().getTransaction().rollback();
+			}
+			if (sf.getCurrentSession().isOpen()) {
+				sf.getCurrentSession().close();
+			}
+		} finally {
+			if (sf.getCurrentSession().isOpen()) {
+				if (sf.getCurrentSession().beginTransaction().isActive()) {
+					sf.getCurrentSession().flush();
+					sf.getCurrentSession().clear();
 				}
-				
-				if(factory.getCurrentSession().isOpen()) {
-					factory.getCurrentSession().close();
+				if (sf.getCurrentSession().isOpen()) {
+					sf.getCurrentSession().close();
 				}
 			}
 		}
